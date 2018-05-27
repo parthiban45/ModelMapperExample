@@ -5,6 +5,8 @@ import com.modelmapper.example.dto.UserDTO;
 import com.modelmapper.example.model.Order;
 import com.modelmapper.example.model.User;
 import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
 
 public class ModelMapperExampleTest {
     @Test
@@ -13,8 +15,9 @@ public class ModelMapperExampleTest {
         UserDTO userDTO = new UserDTO();
         userDTO.setFirstName("Test");
         userDTO.setLastName("User");
-        userDTO.setUserName("TestUSer");
-        System.out.print(modelMapperExample.toEntity(userDTO).toString());
+        User user = modelMapperExample.toEntity(userDTO);
+        assertEquals(user.getFirstName(),userDTO.getFirstName());
+        assertEquals(user.getLastName(),userDTO.getLastName());
     }
     @Test
     public void test_toDTO_ExplicitMapping(){
@@ -23,17 +26,25 @@ public class ModelMapperExampleTest {
         user.setFirstName("Test");
         user.setLastName("User");
         user.setUserName("TestUSer");
-        System.out.print(modelMapperExample.toDTO(user));
+        UserDTO userDTO = modelMapperExample.toDTO(user);
+        assertEquals(userDTO.getFirstName(),user.getFirstName());
+        assertEquals(userDTO.getLastName(),user.getLastName());
     }
     @Test
     public void test_toOrderEntity_DefaultMapping(){
         ModelMapperExample modelMapperExample = new ModelMapperExample();
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setOrderid(123);
-        orderDTO.setOrderName("TestOrder");
+        orderDTO.setName("TestOrder");
         orderDTO.setOrderQuantity(12);
-        orderDTO.setOrderValue(15000);
-        System.out.print(modelMapperExample.toOrderEntity(orderDTO));
+        orderDTO.setValue(15000);
+        Order order = modelMapperExample.toOrderEntity(orderDTO);
+        assertEquals(order.getOrderName(), orderDTO.getName());
+        assertEquals(order.getOrderDate(), orderDTO.getOrderDate());
+        assertEquals(order.getOrderid(), orderDTO.getOrderid());
+        assertEquals(order.getOrderQuantity(), orderDTO.getOrderQuantity());
+        assertEquals(order.getOrderValue(), orderDTO.getValue());
+
     }
     @Test
     public void test_toOrderDTO_DefaultMapping(){
@@ -43,7 +54,11 @@ public class ModelMapperExampleTest {
         order.setOrderName("TestOrder");
         order.setOrderQuantity(12);
         order.setOrderValue(15000);
-        System.out.print(modelMapperExample.toOrderDTO(order));
+        OrderDTO orderDTO = modelMapperExample.toOrderDTO(order);
+        assertEquals(orderDTO.getName(),order.getOrderName());
+        assertEquals(orderDTO.getOrderDate(),order.getOrderDate());
+        assertEquals(orderDTO.getOrderid(),order.getOrderid());
+        assertEquals(orderDTO.getOrderQuantity(),order.getOrderQuantity());
     }
 
 }

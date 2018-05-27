@@ -7,6 +7,8 @@ import org.modelmapper.PropertyMap;
 import com.modelmapper.example.dto.*;
 import com.modelmapper.example.model.*;
 
+import java.util.Date;
+
 public class ModelMapperExample {
 
     private static ModelMapper modelMapper = new ModelMapper();
@@ -16,15 +18,21 @@ public class ModelMapperExample {
         modelMapper.addMappings(new PropertyMap<User, UserDTO>() {
             @Override
             protected void configure() {
-                map().setUserName(this.source.getUserName());
                 map().setFirstName(this.source.getFirstName());
                 map().setLastName(this.source.getLastName());
+            }
+        });
+        modelMapper.addMappings(new PropertyMap<UserDTO, User>() {
+            @Override
+            protected void configure() {
+                map().setFirstName(this.source.getFirstName());
+                map().setLastName(this.source.getLastName());
+                map().setUserName(null);
             }
         });
     }
 
     public static void main(String[] args){
-
 
     }
 
